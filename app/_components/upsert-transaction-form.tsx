@@ -35,6 +35,7 @@ import {
 import { DatePicker } from "./ui/date-picker";
 import { MoneyInput } from "./money-input";
 import { Button } from "./ui/button";
+import { upsertTransaction } from "../_actions/upsert-transaction";
 
 interface UpsertTransactionFormProps {
   setIsOpen: (isOpen: boolean) => void;
@@ -57,13 +58,14 @@ export function UpsertTransactionForm({
 
   const onSubmit = async (data: UpsertTransactionInput) => {
     try {
-      console.log(data);
+      await upsertTransaction(data);
       setIsOpen(false);
       form.reset();
     } catch (error) {
       console.error(error);
     }
   };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
