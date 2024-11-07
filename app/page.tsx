@@ -10,9 +10,9 @@ export default function HomePage() {
   }
 
   return (
-    <div className="flex w-screen">
+    <main className="space-y-6 p-6">
       <h1>Home page</h1>
       <UserButton showName />
-    </div>
+    </main>
   );
 }
