@@ -1,3 +1,4 @@
+import { CustomTransaction } from "../_types/CustomTransaction";
 import {
   Dialog,
   DialogContent,
@@ -10,12 +11,18 @@ import { UpsertTransactionForm } from "./upsert-transaction-form";
 interface UpsertTransactionDialogProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  transactionId?: string;
+  defaultValues?: CustomTransaction;
 }
 
 export function UpsertTransactionDialog({
   isOpen,
   setIsOpen,
+  transactionId,
+  defaultValues,
 }: UpsertTransactionDialogProps) {
+  const isUpdate = Boolean(transactionId);
+
   return (
     <Dialog
       open={isOpen}
@@ -25,11 +32,18 @@ export function UpsertTransactionDialog({
     >
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Criar transação</DialogTitle>
+          <DialogTitle>
+            {isUpdate ? "Atualizar" : "Criar"} transação
+          </DialogTitle>
           <DialogDescription>Insira as informações abaixo</DialogDescription>
         </DialogHeader>
 
-        <UpsertTransactionForm setIsOpen={setIsOpen} />
+        <UpsertTransactionForm
+          setIsOpen={setIsOpen}
+          isUpdate={isUpdate}
+          transactionId={transactionId}
+          defaultValues={defaultValues}
+        />
       </DialogContent>
     </Dialog>
   );

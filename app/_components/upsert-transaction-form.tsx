@@ -36,17 +36,24 @@ import { DatePicker } from "./ui/date-picker";
 import { MoneyInput } from "./money-input";
 import { Button } from "./ui/button";
 import { upsertTransaction } from "../_actions/upsert-transaction";
+import { CustomTransaction } from "../_types/CustomTransaction";
 
 interface UpsertTransactionFormProps {
   setIsOpen: (isOpen: boolean) => void;
+  isUpdate: boolean;
+  transactionId?: string;
+  defaultValues?: CustomTransaction;
 }
 
 export function UpsertTransactionForm({
   setIsOpen,
+  isUpdate,
+  transactionId,
+  defaultValues,
 }: UpsertTransactionFormProps) {
   const form = useForm<UpsertTransactionInput>({
     resolver: zodResolver(UpsertTransactionSchema),
-    defaultValues: {
+    defaultValues: defaultValues || {
       amount: 50,
       category: TransactionCategory.OTHER,
       date: new Date(),
@@ -58,7 +65,7 @@ export function UpsertTransactionForm({
 
   const onSubmit = async (data: UpsertTransactionInput) => {
     try {
-      await upsertTransaction(data);
+      await upsertTransaction({ ...data, id: transactionId });
       setIsOpen(false);
       form.reset();
     } catch (error) {
@@ -194,7 +201,7 @@ export function UpsertTransactionForm({
             Cancelar
           </Button>
           <Button type="submit" className="ml-2">
-            Adicionar
+            {isUpdate ? "Atualizar" : "Adicionar"}
           </Button>
         </div>
       </form>
