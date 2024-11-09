@@ -3,6 +3,7 @@ import { DataTable } from "../_components/ui/data-table";
 import { transactionTableColumns } from "./_components/transaction-table-columns";
 import { AddTransactionButton } from "../_components/add-transaction-button";
 import { NavBar } from "../_components/navbar";
+import { ScrollArea } from "../_components/ui/scroll-area";
 
 export default async function TransactionsPage() {
   const transactions = await db.transaction.findMany({});
@@ -14,15 +15,17 @@ export default async function TransactionsPage() {
   return (
     <>
       <NavBar />
-      <main className="space-y-6 p-6">
+      <main className="flex h-full flex-col space-y-6 overflow-hidden p-6">
         <div className="flex w-full items-center justify-between">
           <h1 className="text-2xl font-bold">Transações</h1>
           <AddTransactionButton />
         </div>
-        <DataTable
-          columns={transactionTableColumns}
-          data={convertedTransactions}
-        />
+        <ScrollArea>
+          <DataTable
+            columns={transactionTableColumns}
+            data={convertedTransactions}
+          />
+        </ScrollArea>
       </main>
     </>
   );

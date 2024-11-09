@@ -76,7 +76,7 @@ export function TransactionPieChart({
               data={chartData}
               dataKey="amount"
               nameKey="type"
-              innerRadius={60}
+              innerRadius={80}
             />
           </PieChart>
         </ChartContainer>

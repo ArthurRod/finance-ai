@@ -30,7 +30,7 @@ export default async function HomePage({
   return (
     <>
       <NavBar />
-      <main className="space-y-6 p-6">
+      <main className="flex h-full flex-col space-y-6 overflow-hidden p-6">
         <div className="flex w-full items-center justify-between">
           <h1 className="text-2xl font-bold">Dashboard</h1>
           <TimeSelect />
@@ -38,7 +38,7 @@ export default async function HomePage({
         <div className="grid h-full grid-cols-[2fr,1fr] gap-6 overflow-hidden">
           <div className="flex flex-col gap-6 overflow-hidden">
             <SummaryCards {...dashboard} />
-            <div className="grid grid-cols-3 grid-rows-1 gap-6">
+            <div className="grid grid-cols-3 grid-rows-1 gap-6 overflow-hidden">
               <TransactionPieChart {...dashboard} />
               <ExpensesPerCategory
                 expensesPerCategory={dashboard.totalExpensePerCategory}
