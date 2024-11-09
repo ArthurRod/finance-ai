@@ -18,6 +18,7 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
         danger: "hsl(var(--danger))",
+        gray: "hsl(var(--gray))",
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",

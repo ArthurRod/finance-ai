@@ -5,6 +5,7 @@ import { TimeSelect } from "./_components/time-select";
 import { redirect } from "next/navigation";
 import { getDashboard } from "../_data/get-dashboard";
 import { TransactionPieChart } from "./_components/transaction-pie-chart";
+import { ExpensesPerCategory } from "./_components/expenses-per-category";
 
 interface HomePageProps {
   searchParams: {
@@ -38,6 +39,9 @@ export default async function HomePage({
             <SummaryCards {...dashboard} />
             <div className="grid grid-cols-3 grid-rows-1 gap-6">
               <TransactionPieChart {...dashboard} />
+              <ExpensesPerCategory
+                expensesPerCategory={dashboard.totalExpensePerCategory}
+              />
             </div>
           </div>
         </div>
