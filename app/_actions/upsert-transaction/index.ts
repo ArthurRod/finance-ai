@@ -5,9 +5,9 @@ import {
   TransactionPaymentMethod,
   TransactionType,
 } from "@prisma/client";
-import { UpsertTransactionSchema } from "../_schemas/upsert-transaction-schema";
+import { UpsertTransactionSchema } from "../../_schemas/upsert-transaction-schema";
 import { auth } from "@clerk/nextjs/server";
-import { db } from "../_lib/prisma";
+import { db } from "../../_lib/prisma";
 import { revalidatePath } from "next/cache";
 
 interface UpsertTransactionParams {

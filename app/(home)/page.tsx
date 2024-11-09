@@ -3,6 +3,8 @@ import { NavBar } from "../_components/navbar";
 import { SummaryCards } from "./_components/summary-cards";
 import { TimeSelect } from "./_components/time-select";
 import { redirect } from "next/navigation";
+import { getDashboard } from "../_data/get-dashboard";
+import { TransactionPieChart } from "./_components/transaction-pie-chart";
 
 interface HomePageProps {
   searchParams: {
@@ -19,6 +21,10 @@ export default async function HomePage({
     redirect("?month=01");
   }
 
+  const dashboard = await getDashboard({
+    month,
+  });
+
   return (
     <>
       <NavBar />
@@ -29,7 +35,10 @@ export default async function HomePage({
         </div>
         <div className="grid h-full grid-cols-[2fr,1fr] gap-6 overflow-hidden">
           <div className="flex flex-col gap-6 overflow-hidden">
-            <SummaryCards month={month} />
+            <SummaryCards {...dashboard} />
+            <div className="grid grid-cols-3 grid-rows-1 gap-6">
+              <TransactionPieChart {...dashboard} />
+            </div>
           </div>
         </div>
       </main>
