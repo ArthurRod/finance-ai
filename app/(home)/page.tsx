@@ -20,7 +20,7 @@ export default async function HomePage({
   const monthIsValid = month && isMatch(month, "MM");
 
   if (!monthIsValid) {
-    redirect("?month=01");
+    redirect(`?month=${new Date().getMonth() + 1}`);
   }
 
   const dashboard = await getDashboard({

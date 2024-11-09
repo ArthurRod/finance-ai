@@ -42,6 +42,24 @@ export function TransactionPieChart({
   expensesTotal,
   typesPercentage,
 }: TransactionsPieChartProps) {
+  const emptyChartData = [
+    {
+      type: TransactionType.DEPOSIT,
+      amount: 33.3,
+      fill: "#55B02E",
+    },
+    {
+      type: TransactionType.EXPENSE,
+      amount: 33.3,
+      fill: "#E93030",
+    },
+    {
+      type: TransactionType.INVESTMENT,
+      amount: 33.3,
+      fill: "#FFFFFF",
+    },
+  ];
+
   const chartData = [
     {
       type: TransactionType.DEPOSIT,
@@ -60,6 +78,9 @@ export function TransactionPieChart({
     },
   ];
 
+  const isTransactionsInPeriod =
+    depositsTotal || expensesTotal || investmentsTotal;
+
   return (
     <Card className="flex flex-col p-6">
       <CardContent className="flex-1 pb-0">
@@ -67,18 +88,33 @@ export function TransactionPieChart({
           config={chartConfig}
           className="mx-auto aspect-square max-h-[250px]"
         >
-          <PieChart>
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Pie
-              data={chartData}
-              dataKey="amount"
-              nameKey="type"
-              innerRadius={80}
-            />
-          </PieChart>
+          {isTransactionsInPeriod ? (
+            <PieChart>
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
+              />
+              <Pie
+                data={chartData}
+                dataKey="amount"
+                nameKey="type"
+                innerRadius={80}
+              />
+            </PieChart>
+          ) : (
+            <PieChart>
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
+              />
+              <Pie
+                data={emptyChartData}
+                dataKey="amount"
+                nameKey="type"
+                innerRadius={80}
+              />
+            </PieChart>
+          )}
         </ChartContainer>
 
         <div className="space-y-3">

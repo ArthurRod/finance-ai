@@ -18,17 +18,23 @@ export function ExpensesPerCategory({
       </CardHeader>
 
       <CardContent className="space-y-6">
-        {expensesPerCategory.map((category) => (
-          <div key={category.category} className="space-y-2">
-            <div className="flex w-full justify-between">
-              <p className="text-sm font-bold">
-                {TRANSACTION_CATEGORY_LABELS[category.category]}
-              </p>
-              <p className="text-sm font-bold">{category.percentageOfTotal}%</p>
+        {expensesPerCategory && expensesPerCategory.length ? (
+          expensesPerCategory.map((category) => (
+            <div key={category.category} className="space-y-2">
+              <div className="flex w-full justify-between">
+                <p className="text-sm font-bold">
+                  {TRANSACTION_CATEGORY_LABELS[category.category]}
+                </p>
+                <p className="text-sm font-bold">
+                  {category.percentageOfTotal}%
+                </p>
+              </div>
+              <Progress value={category.percentageOfTotal} />
             </div>
-            <Progress value={category.percentageOfTotal} />
-          </div>
-        ))}
+          ))
+        ) : (
+          <span>There&apos;s no transactions categories in this period</span>
+        )}
       </CardContent>
     </ScrollArea>
   );

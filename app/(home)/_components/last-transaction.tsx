@@ -37,33 +37,37 @@ export function LastTransactions({ lastTransactions }: LastTransactionsProps) {
         </Button>
       </CardHeader>
       <CardContent className="space-y-6">
-        {lastTransactions.map((transaction) => (
-          <div
-            key={transaction.id}
-            className="flex items-center justify-between"
-          >
-            <div className="flex items-center gap-3">
-              <div className="rounded-lg bg-white bg-opacity-[3%] p-3 text-white">
-                <Image
-                  src={`/svg/${TRANSACTION_PAYMENT_METHOD_ICONS[transaction.paymentMethod]}`}
-                  height={20}
-                  width={20}
-                  alt="PIX"
-                />
+        {lastTransactions && lastTransactions.length ? (
+          lastTransactions.map((transaction) => (
+            <div
+              key={transaction.id}
+              className="flex items-center justify-between"
+            >
+              <div className="flex items-center gap-3">
+                <div className="rounded-lg bg-white bg-opacity-[3%] p-3 text-white">
+                  <Image
+                    src={`/svg/${TRANSACTION_PAYMENT_METHOD_ICONS[transaction.paymentMethod]}`}
+                    height={20}
+                    width={20}
+                    alt="PIX"
+                  />
+                </div>
+                <div>
+                  <p className="text-sm font-bold">{transaction.name}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {getDayMonthYear(transaction.date)}
+                  </p>
+                </div>
               </div>
-              <div>
-                <p className="text-sm font-bold">{transaction.name}</p>
-                <p className="text-sm text-muted-foreground">
-                  {getDayMonthYear(transaction.date)}
-                </p>
-              </div>
+              <p className={`text-sm font-bold ${getAmountColor(transaction)}`}>
+                {getAmountPrefix(transaction)}
+                {formatCurrency(Number(transaction.amount))}
+              </p>
             </div>
-            <p className={`text-sm font-bold ${getAmountColor(transaction)}`}>
-              {getAmountPrefix(transaction)}
-              {formatCurrency(Number(transaction.amount))}
-            </p>
-          </div>
-        ))}
+          ))
+        ) : (
+          <span>There&apos;s no transactions in this period</span>
+        )}
       </CardContent>
     </ScrollArea>
   );
