@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { getDashboard } from "../_data/get-dashboard";
 import { TransactionPieChart } from "./_components/transaction-pie-chart";
 import { ExpensesPerCategory } from "./_components/expenses-per-category";
+import { LastTransactions } from "./_components/last-transaction";
 
 interface HomePageProps {
   searchParams: {
@@ -44,6 +45,7 @@ export default async function HomePage({
               />
             </div>
           </div>
+          <LastTransactions lastTransactions={dashboard.lastTransactions} />
         </div>
       </main>
     </>
