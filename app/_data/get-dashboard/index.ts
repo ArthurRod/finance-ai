@@ -5,6 +5,7 @@ import {
   TotalExpensePerCategory,
   TransactionPercentagePerType,
 } from "@/app/_types/TransactionExpensePerTyper";
+import { auth } from "@clerk/nextjs/server";
 import { TransactionType } from "@prisma/client";
 
 interface GetDashboardParams {
@@ -12,7 +13,14 @@ interface GetDashboardParams {
 }
 
 export const getDashboard = async (params: GetDashboardParams) => {
+  const { userId } = await auth();
+
+  if (!userId) {
+    throw new Error("Unauthorized");
+  }
+
   const where = {
+    userId,
     date: {
       gte: new Date(`2024-${params.month}-01`),
       lt: new Date(`2024-${params.month}-31`),
