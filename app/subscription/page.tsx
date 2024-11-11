@@ -3,8 +3,13 @@ import { NavBar } from "../_components/navbar";
 import { Card, CardContent, CardHeader } from "../_components/ui/card";
 import { Badge } from "../_components/ui/badge";
 import { AcquirePlanButton } from "./_components/acquire-plan-button";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 
-export default function SubscriptionPage() {
+export default async function SubscriptionPage() {
+  const { userId } = await auth();
+  const user = await clerkClient().users.getUser(userId!);
+  const hasPremiumPlan = user.publicMetadata.subscriptionPlan == "premium";
+
   return (
     <>
       <NavBar />
@@ -37,9 +42,11 @@ export default function SubscriptionPage() {
 
           <Card className="w-[450px]">
             <CardHeader className="relative border-b border-solid py-8">
-              <Badge className="absolute left-4 top-12 bg-primary/10 text-primary">
-                Ativo
-              </Badge>
+              {hasPremiumPlan && (
+                <Badge className="absolute left-4 top-12 bg-primary/10 text-primary">
+                  Ativo
+                </Badge>
+              )}
               <h2 className="text-center text-2xl font-semibold">
                 Plano Premium
               </h2>

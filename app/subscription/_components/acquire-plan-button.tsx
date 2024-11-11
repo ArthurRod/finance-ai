@@ -8,6 +8,8 @@ import Link from "next/link";
 
 export function AcquirePlanButton() {
   const { user } = useUser();
+  const hasPremiumPlan = user?.publicMetadata.subscriptionPlan == "premium";
+
   const handleAcquirePlanClick = async () => {
     const { sessionId } = await createStripeCheckout();
 
@@ -25,7 +27,7 @@ export function AcquirePlanButton() {
 
     await stripe.redirectToCheckout({ sessionId });
   };
-  const hasPremiumPlan = user?.publicMetadata.subscriptionPlan == "premium";
+
   if (hasPremiumPlan) {
     return (
       <Button className="w-full rounded-full font-bold" variant="link">
