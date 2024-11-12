@@ -5,14 +5,20 @@ import { AddTransactionButton } from "../_components/add-transaction-button";
 import { NavBar } from "../_components/navbar";
 import { ScrollArea } from "../_components/ui/scroll-area";
 import { canUserAddTransaction } from "../_data/can-user-add-transaction";
+import { auth } from "@clerk/nextjs/server";
 
 export default async function TransactionsPage() {
+  const { userId } = await auth();
   const userCanAddTransaction = await canUserAddTransaction();
-  const transactions = await db.transaction.findMany({});
-  const convertedTransactions = transactions.map((transaction) => ({
-    ...transaction,
-    amount: Number(transaction.amount),
-  }));
+
+  const transactions = await db.transaction.findMany({
+    where: {
+      userId: userId!,
+    },
+    orderBy: {
+      date: "desc",
+    },
+  });
 
   return (
     <>
@@ -25,7 +31,7 @@ export default async function TransactionsPage() {
         <ScrollArea>
           <DataTable
             columns={transactionTableColumns}
-            data={convertedTransactions}
+            data={JSON.parse(JSON.stringify(transactions))}
           />
         </ScrollArea>
       </main>
