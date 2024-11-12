@@ -6,12 +6,11 @@ import {
   TRANSACTION_CATEGORY_LABELS,
   TRANSACTION_PAYMENT_METHOD_LABELS,
 } from "@/app/_constants/transaction";
-import { Button } from "@/app/_components/ui/button";
-import { TrashIcon } from "lucide-react";
 import { EditTransactionButton } from "./edit-transaction-button";
 import { CustomTransaction } from "@/app/_types/CustomTransaction";
 import { getDayMonthYear } from "@/app/_utils/day-month-year";
 import { formatCurrency } from "@/app/_utils/currency";
+import { DeleteTransactionButton } from "./delete-transaction-button";
 
 export const transactionTableColumns: ColumnDef<CustomTransaction>[] = [
   {
@@ -56,13 +55,7 @@ export const transactionTableColumns: ColumnDef<CustomTransaction>[] = [
       return (
         <>
           <EditTransactionButton transaction={transaction} />
-          <Button
-            variant="ghost"
-            size="icon"
-            className="ml-1 text-muted-foreground"
-          >
-            <TrashIcon />
-          </Button>
+          <DeleteTransactionButton transactionId={transaction.id} />
         </>
       );
     },
