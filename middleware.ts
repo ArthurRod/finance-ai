@@ -11,7 +11,7 @@ export default clerkMiddleware(async (auth, req) => {
   const { userId } = await auth();
 
   if (!userId && isProtectedRoute(req)) {
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}/login`);
+    return NextResponse.redirect(`${process.env.APP_URL}/login`);
   }
 
   return NextResponse.next();
